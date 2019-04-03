@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Bill",
+    "msg": "Hi All!"
+  },
+  {
+    "name": "Ann",
+    "msg": "ICS 221 is fun!"
+  },
+  {
+    "name": "John",
+    "msg": "Howdy!"
+  },
+  {
+    "name": "Barb",
+    "msg": "Hi"
+  },
+  {
+    "name": "Frank",
+    "msg": "Who's tired?"
+  },
+  {
+    "name": "Sarah",
+    "msg": "I heart React"
+  }
+]
