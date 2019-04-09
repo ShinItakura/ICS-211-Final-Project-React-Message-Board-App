@@ -15,7 +15,16 @@ router.route('/msgs')
 .post(passport.authenticate('basic', { session: false }),
 msgAPIController.addNewMessage);
 
-router.route('/msgs/:messageid')
-.get(msgAPIController.getSingleMessage);
+
+router.route('/msgs/:name/:messageid')
+.get(msgAPIController.getSingleMessage)
+.delete(msgAPIController.deleteSingleMessage)
+.put(msgAPIController.updateSingleMessage);
+
+
+
+
+
+
 
 module.exports = router;
