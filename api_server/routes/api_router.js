@@ -6,6 +6,7 @@ const userAPIController = require('../controllers/user-api');
 
 
 router.post('/users', userAPIController.registerNewUser);
+
 router.get('/users/login',
     passport.authenticate('basic', { session: false }),
     userAPIController.loginUser);
@@ -13,8 +14,8 @@ router.get('/users/login',
 router.route('/msgs')
 .get(msgAPIController.getAllMessagesOrderedByLastPosted)
 .post(passport.authenticate('basic', { session: false }),
-msgAPIController.addNewMessage);
-
+msgAPIController.addNewMessage)
+;//.delete(msgAPIcontroller.deleteAllMessage);
 
 router.route('/msgs/:name/:messageid')
 .get(msgAPIController.getSingleMessage)

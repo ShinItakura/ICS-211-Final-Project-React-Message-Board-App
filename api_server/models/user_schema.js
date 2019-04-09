@@ -22,8 +22,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 8,
         maxlength: 50
-    },
-    admin: false
+    }
 });
 
 userSchema.pre('save', function(next) {

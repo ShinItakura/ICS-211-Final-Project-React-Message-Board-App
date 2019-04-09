@@ -82,32 +82,28 @@ const deleteSingleMessage = (req, res) => {
 
 const deleteAllMessage = (req, res) => {
     messageModel.deleteMany({}, err => {
-      // If not authorized send 403 response
-      if (req.body.name !== "Admin") {
-        res.status(403).json(err);
-      }
-      const response = {
-        message: "All messages deleted"
-      };
-      return res.status(200).send(response);
+        if (req.body.name !== "Admin") {
+            res.status(403).json(err);
+        }
+        return res.status(200).send({
+            "api-msg": "All messages deleted"
+        });
     });
-  };
+};
 
 // UPDATE Request Handler
 
 const updateSingleMessage = (req, res) => {
     messageModel.findOneAndUpdate({ _id: req.params.messageid }, req.body, (err, msg) => {
         if (req.params.name !== msg.name) {
-          res.status(403).json(err);
+            res.status(403).json(err);
         } else if (err) return res.status(500).send(err);
-        const response = {
-          message: "Message updated",
-          id: msg._id
-        };
-        return res.status(200).send(response);
-      }
+            return res.status(200).json({
+                "api-msg": "Message updated"
+            });
+        }
     );
-  };
+};
 
 // POST Request Handler
 const addNewMessage = (req, res) => {
@@ -119,9 +115,6 @@ const addNewMessage = (req, res) => {
         }
     });
 };
-
-
-
 
 module.exports = {
     getAllMessagesOrderedByLastPosted,
