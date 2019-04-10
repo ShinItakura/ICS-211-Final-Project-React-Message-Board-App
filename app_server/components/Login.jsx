@@ -75,16 +75,12 @@ class Login extends React.Component {
                 <form onSubmit={this.register}>
                     <div className="form-group">
                         <div className="row">
-                            <label htmlFor="register"className="col-2 col-form-label">
-                                Not registered ?
-                            </label>
-                        </div>
-                        <div className="row">
-                            <div className="col2">
-                                <button type="submit" className="btn btn-secondary">
-                                    Register
-                                </button>
+                            <div className="col-2">
+                                <label htmlFor="register"className="col-form-label">Not registered ?</label>
                             </div>
+                            <div className="col-1">
+                                <button type="submit" className="btn btn-secondary">Register</button>
+                            </div>  
                         </div>
                     </div> 
                 </form> 

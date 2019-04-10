@@ -17,7 +17,7 @@ router.route('/msgs')
 msgAPIController.addNewMessage)
 .delete(msgAPIController.deleteAllMessage);
 
-router.route('/msgs/:name/:messageid')
+router.route('/msgs/:name/:messageid') // change to email later
 .get(msgAPIController.getSingleMessage)
 .delete(msgAPIController.deleteSingleMessage)
 .put(msgAPIController.updateSingleMessage);
