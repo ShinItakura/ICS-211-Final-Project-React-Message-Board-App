@@ -8,8 +8,8 @@ const MsgList = (props) => {
                     <th scope="col" className="w-10">#</th>
                     <th scope="col" className="w-25">Name</th>
                     <th scope="col" className="w-50">Message</th>
-                    <th scope="col" className="w-15">Update</th>
-                    <th scope="col" className="w-15">Delete</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
