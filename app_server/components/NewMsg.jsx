@@ -3,7 +3,7 @@ const React = require('react');
 class NewMsg extends React.Component {
     constructor(props){
         super(props);
-        this.state = {name: "", msg: ""};
+        this.state = { name: "", msg: "" };
         this.addMessage = this.addMessage.bind(this);
         this.handleText = this.handleText.bind(this);
     }
@@ -50,7 +50,7 @@ class NewMsg extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-3">
-                            <input id="name" type="text" className="form-control" placeholder="Your Name" value={this.state.name} onChange={this.handleText}/>
+                            <input id="name" type="text" className="form-control" placeholder={this.props.username} value={this.state.name} onChange={this.handleText}/>
                         </div>
                         <div className="col-7">
                             <input id="msg" type="text" className="form-control" placeholder="Your Message" value={this.state.msg} onChange={this.handleText}/>

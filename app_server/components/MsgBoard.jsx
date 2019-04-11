@@ -17,7 +17,8 @@ class MsgBoard extends React.Component {
                 password: ''
             },
             registrationForm: false,
-            registrationFail: false
+            registrationFail: false,
+            username: ''
         };
         this.addMessage = this.addMessage.bind(this);
         this.login = this.login.bind(this);
@@ -107,7 +108,8 @@ class MsgBoard extends React.Component {
                     userCredentials: userCredentials,
                     loginForm: false,
                     loginFail: false       
-                });     
+                });
+                return response;     
             } else {
                 // Credentials are wrong
                 this.setState((state) => {
@@ -117,6 +119,11 @@ class MsgBoard extends React.Component {
                     });       
                 });     
             }   
+        }).then(result => result.json())
+        .then(result => {
+            this.setState({
+                username: result.username
+            })
         })   
         .catch(error => {console.log(error);   
         })
@@ -176,7 +183,7 @@ class MsgBoard extends React.Component {
                 loginAttempts={this.state.loginAttempts}
                 />
             } else {
-                form = <NewMsg addMsgCallback={this.addMessage} />
+                form = <NewMsg addMsgCallback={this.addMessage} username={this.state.username} />
             }
             return(
                 <div>

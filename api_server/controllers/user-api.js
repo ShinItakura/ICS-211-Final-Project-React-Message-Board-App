@@ -56,7 +56,8 @@ const registerNewUser = (req, res) => {
 }
 
 const loginUser = (req, res) => {
-    res.status(200).json({"api-msg": "Successfully Authenticated"});
+    res.status(200).json(req.user);
+    
 }
 
 module.exports = {
