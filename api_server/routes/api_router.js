@@ -17,11 +17,13 @@ router.route('/msgs')
 msgAPIController.addNewMessage)
 .delete(msgAPIController.deleteAllMessage);
 
-router.route('/msgs/:name/:messageid') // change to email later
+router.route('/msgs/:name/:messageid')
 .get(msgAPIController.getSingleMessage)
 .delete(msgAPIController.deleteSingleMessage)
 .put(msgAPIController.updateSingleMessage);
 
+router.route('/msgs/:name')
+.get(msgAPIController.getAllMessagesOrderedByLastPosted);
 
 
 

@@ -27,7 +27,7 @@ class NewMsg extends React.Component {
         //let name = this.state.name;
         let username = this.props.username;
         let msg = this.state.msg;
-        console.log(username);
+        //console.log(username); // returns user name
 
         // Make sure neither field is empty
         /* if (!name || !msg){ */

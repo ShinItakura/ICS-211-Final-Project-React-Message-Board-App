@@ -1,6 +1,53 @@
 const React = require('react');
+const Messages = require("./Messages.jsx");
 
-const MsgList = (props) => {
+class MsgList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            messages: this.props.messages
+        };
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ messages: nextProps.messages });
+    }
+
+    handleDelete(id) {
+        this.props.deleteSingleMsgCallback(id);
+    }
+
+    render() {
+        return (
+            <table className="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col" className="w-10">#</th>
+                    <th scope="col" className="w-25">Name</th>
+                    <th scope="col" className="w-50">Message</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.state.messages.map((message, index) => (
+                        <Messages
+                        key={index}
+                        displayId={index + 1}
+                        id={message._id}
+                        name={message.name}
+                        msg={message.msg}
+                        deleteSingleMsgCallback={this.handleDelete}
+                        />
+                    ))}
+                </tbody>
+            </table>
+        );
+    }
+}
+/* const MsgList = (props) => {
+
     return (
         <table className="table table-striped table-bordered">
             <thead>
@@ -19,12 +66,12 @@ const MsgList = (props) => {
                     <td>{message.name}</td>
                     <td>{message.msg}</td>
                     <td><button className="btn btn-primary">Update</button></td>
-                    <td><button className="btn btn-secondary">Delete</button></td>
+                    <td><button id="cont1" className="btn btn-secondary">Delete</button></td>
                 </tr> 
                 )}
             </tbody>
         </table>
     );
-}
+} */
 
 module.exports = MsgList
