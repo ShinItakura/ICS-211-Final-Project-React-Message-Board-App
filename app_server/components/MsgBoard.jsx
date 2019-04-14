@@ -92,7 +92,7 @@ class MsgBoard extends React.Component {
 
     deleteSingleMessage(id) {
         let messageId = { _id: id };
-        fetch(`${process.env.API_URL}/msgs/name/${messageId}`, {
+        fetch(`${process.env.API_URL}/msgs`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
