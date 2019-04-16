@@ -101,10 +101,10 @@ class MsgBoard extends React.Component {
         .then(response => this.handleHTTPErrors(response))
         //.then(result => result.json())
         .then(result => {
-            let updatedMessages = this.state.messages;
-            //updatedMessages = updatedMessages.filter(messages => messages._id !== result.id); 
+            let newMsgList = this.state.messages;
+            newMsgList = newMsgList.filter(msg => msg._id !== id)
             this.setState({
-                messages: updatedMessages
+                messages: newMsgList
             });
         }) 
         .catch(error => {
