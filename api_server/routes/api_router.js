@@ -14,10 +14,10 @@ router.get('/users/login',
 router.route('/msgs')
 .get(msgAPIController.getAllMessagesOrderedByLastPosted)
 .post(passport.authenticate('basic', { session: false }),
-msgAPIController.addNewMessage)
-.delete(msgAPIController.deleteAllMessage);
+msgAPIController.addNewMessage);
+//.delete(msgAPIController.deleteAllMessage);
 
-router.route('/msgs/:name/:messageid')
+router.route('/msgs/:messageid')
 .get(msgAPIController.getSingleMessage)
 .delete(msgAPIController.deleteSingleMessage)
 .put(msgAPIController.updateSingleMessage);

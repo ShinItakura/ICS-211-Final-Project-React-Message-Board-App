@@ -5,6 +5,7 @@ class Messages extends React.Component {
         super(props);
         this.deleteMessage = this.deleteMessage.bind(this);
     }
+    
 
     deleteMessage() {
         //console.log(this.props);
@@ -14,7 +15,7 @@ class Messages extends React.Component {
 
     render() {
         let messageActions;
-        if (/* this.props.username === "Admin" ||*/ this.props.name === "shin") {
+        if (this.props.name === this.props.username) {
             messageActions = (
                 <td>
                     <button type="submit" className="btn btn-secondary" onClick={this.deleteMessage}>Delete</button>

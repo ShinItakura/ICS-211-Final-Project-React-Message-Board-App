@@ -91,23 +91,22 @@ class MsgBoard extends React.Component {
     }
 
     deleteSingleMessage(id) {
-        let messageId = { _id: id };
-        fetch(`${process.env.API_URL}/msgs`, {
+        //console.log(id);
+        fetch(`${process.env.API_URL}msgs/${id}`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(messageId)
+            }
         })
         .then(response => this.handleHTTPErrors(response))
-        .then(result => result.json())
+        //.then(result => result.json())
         .then(result => {
-            //let updatedMsgs = this.state.messages;
-            //updatedMsgs = updatedMsgs.filter(msg => msg._id !== result.id);
+            let updatedMessages = this.state.messages;
+            //updatedMessages = updatedMessages.filter(messages => messages._id !== result.id); 
             this.setState({
-                messages: updatedMsgs
+                messages: updatedMessages
             });
-        })
+        }) 
         .catch(error => {
             console.log(error);
         });
@@ -146,8 +145,9 @@ class MsgBoard extends React.Component {
         }).then(result => result.json())
         .then(result => {
             this.setState({
-                username: result.username
+                username: result.username,
             })
+            console.log(username);
         })   
         .catch(error => {console.log(error);   
         })
@@ -214,7 +214,7 @@ class MsgBoard extends React.Component {
                     {form}
                     <MsgList messages={this.state.messages} 
                     username={this.state.username} 
-                    deleteSingleMsgCallback={this.deleteSingleMessage}/>
+                    deleteMsgCallback={this.deleteSingleMessage}/>
                 </div>
             );
         }

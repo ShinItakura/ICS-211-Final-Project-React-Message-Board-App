@@ -5,7 +5,8 @@ class MsgList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: this.props.messages
+            messages: this.props.messages,
+            name: this.props.username
         };
         this.handleDelete = this.handleDelete.bind(this);
     }
@@ -27,7 +28,7 @@ class MsgList extends React.Component {
                     <th scope="col" className="w-25">Name</th>
                     <th scope="col" className="w-50">Message</th>
                     <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col">{this.props.username}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,8 +38,9 @@ class MsgList extends React.Component {
                         displayId={index + 1}
                         id={message._id}
                         name={message.name}
+                        username={this.props.username}
                         msg={message.msg}
-                        deleteSingleMsgCallback={this.handleDelete}
+                        deleteSingleMsgCallback={this.props.deleteMsgCallback}
                         />
                     ))}
                 </tbody>
