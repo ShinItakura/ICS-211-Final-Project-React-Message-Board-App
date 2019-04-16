@@ -25,6 +25,7 @@ class MsgBoard extends React.Component {
         this.register = this.register.bind(this);
         this.addNewUser = this.addNewUser.bind(this);
         this.deleteSingleMessage = this.deleteSingleMessage.bind(this);
+        this.updateSingleMessage = this.updateSingleMessage.bind(this);
     }
 
     handleHTTPErrors(response){
@@ -107,6 +108,20 @@ class MsgBoard extends React.Component {
                 messages: newMsgList
             });
         }) 
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
+    updateSingleMessage(id ,message){
+        fetch(`${process.env.API_URL}msgs/${id}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(message)
+        })
+        .then(response => this.handleHTTPErrors(response))
         .catch(error => {
             console.log(error);
         });
@@ -212,9 +227,12 @@ class MsgBoard extends React.Component {
             return(
                 <div>
                     {form}
-                    <MsgList messages={this.state.messages} 
+                    <MsgList 
+                    messages={this.state.messages} 
                     username={this.state.username} 
-                    deleteMsgCallback={this.deleteSingleMessage}/>
+                    deleteMsgCallback={this.deleteSingleMessage}
+                    updateMsgCallback={this.updateSingleMessage}
+                    />
                 </div>
             );
         }

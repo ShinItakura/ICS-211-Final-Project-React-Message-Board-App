@@ -9,6 +9,7 @@ class MsgList extends React.Component {
             name: this.props.username
         };
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -17,6 +18,9 @@ class MsgList extends React.Component {
 
     handleDelete(id) {
         this.props.deleteSingleMsgCallback(id);
+    }
+    handleUpdate(id) {
+        this.props.updateSingleMsgCallback(id ,msg);
     }
 
     render() {
@@ -41,6 +45,7 @@ class MsgList extends React.Component {
                         username={this.props.username}
                         msg={message.msg}
                         deleteSingleMsgCallback={this.props.deleteMsgCallback}
+                        updateSingleMsgCallback={this.props.updateMsgCallback}
                         />
                     ))}
                 </tbody>
