@@ -14,8 +14,8 @@ router.get('/users/login',
 router.route('/msgs')
 .get(msgAPIController.getAllMessagesOrderedByLastPosted)
 .post(passport.authenticate('basic', { session: false }),
-msgAPIController.addNewMessage);
-//.delete(msgAPIController.deleteAllMessages);
+msgAPIController.addNewMessage)
+.delete(msgAPIController.deleteAllMessages);
 
 router.route('/msgs/:messageid')
 .get(msgAPIController.getSingleMessage)

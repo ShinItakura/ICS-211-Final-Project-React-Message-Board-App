@@ -80,7 +80,7 @@ const deleteSingleMessage = (req, res) => {
     }
 };
 
-/* const deleteAllMessages = (req, res) => {
+const deleteAllMessages = (req, res) => {
     messageModel.deleteMany({}, err => {
         if (req.body.name !== "Admin") {
             res.status(403).json(err);
@@ -89,7 +89,7 @@ const deleteSingleMessage = (req, res) => {
             "api-msg": "All messages deleted"
         });
     });
-}; */
+};
 
 // UPDATE Request Handler
 
@@ -124,7 +124,7 @@ module.exports = {
     getAllMessagesOrderedByLastPosted,
     getSingleMessage,
     deleteSingleMessage,
-    //deleteAllMessages,
+    deleteAllMessages,
     updateSingleMessage,
     addNewMessage
 }

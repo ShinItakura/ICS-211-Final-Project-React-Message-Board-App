@@ -26,7 +26,7 @@ class MsgBoard extends React.Component {
         this.addNewUser = this.addNewUser.bind(this);
         this.deleteSingleMessage = this.deleteSingleMessage.bind(this);
         this.updateSingleMessage = this.updateSingleMessage.bind(this);
-        //this.deleteAllMessages = this.deleteAllMessages.bind(this);
+        this.deleteAllMessages = this.deleteAllMessages.bind(this);
     }
 
     handleHTTPErrors(response){
@@ -114,26 +114,24 @@ class MsgBoard extends React.Component {
         });
     }
 
-    /* deleteAllMessages(deleteAllUserName){
-        console.log(deleteAllUserName);
-        fetch(`${process.env.API_URL}msgs/`, {
+    deleteAllMessages(deleteAllUserName){
+        console.log("messageboard.jsx " + deleteAllUserName);
+        fetch(`${process.env.API_URL}/msgs`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        .then(result => {
-            let newMsgList = this.state.messages;
-            newMsgList = newMsgList.filter(msg => msg._id !== id)
+        .then(response=> this.handleHTTPErrors(response))
+        .then(result=> {
             this.setState({
-                messages: newMsgList
+                messages: [result].concat(this.state.messages)
             });
-        }) 
+        })
         .catch(error => {
             console.log(error);
         });
-
-    } */
+    }
 
     updateSingleMessage(uId ,uMsg ,uName){
         console.log("messageboard.jsx "+ uId + " " + uName + " " + uMsg   );
@@ -188,6 +186,7 @@ class MsgBoard extends React.Component {
         .then(result => {
             this.setState({
                 username: result.username,
+                //id: result._id
             })
             console.log(username);
         })   
@@ -256,9 +255,11 @@ class MsgBoard extends React.Component {
                     {form}
                     <MsgList 
                     messages={this.state.messages} 
-                    username={this.state.username} 
+                    username={this.state.username}
+                    //id={this.state.id} 
                     deleteMsgCallback={this.deleteSingleMessage}
                     updateMsgCallback={this.updateSingleMessage}
+                    deleteAllCallback={this.deleteAllMessages}
                     />
                 </div>
             );
