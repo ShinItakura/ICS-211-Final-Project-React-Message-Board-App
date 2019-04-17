@@ -26,6 +26,7 @@ class Messages extends React.Component {
         let uMsg = this.state.inputText;
         let uName = this.props.name;
         console.log("messages.jsx "+ uId +" "+ uName + " " + uMsg);
+        //this.setState({text: this.state.inputText, mode: 'view'});
         this.props.updateSingleMsgCallback(uId, uMsg, uName);
     }
     handleChange(e){
