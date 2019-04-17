@@ -84,10 +84,11 @@ const deleteAllMessages = (req, res) => {
     messageModel.deleteMany({}, err => {
         if (req.body.name !== "Admin") {
             res.status(403).json(err);
+        } else {
+            return res.status(200).send({
+                "api-msg": "All messages deleted"
+            });
         }
-        return res.status(200).send({
-            "api-msg": "All messages deleted"
-        });
     });
 };
 
