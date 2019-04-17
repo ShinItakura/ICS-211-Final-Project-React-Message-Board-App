@@ -20,8 +20,11 @@ class MsgList extends React.Component {
         this.props.deleteSingleMsgCallback(id);
     }
 
-    /* handleDeleteAll(deleteAllUserName) {
-        this.props.deleteAllUserNameCallback(deleteAllUserName);
+    /* handleDeleteAll() {
+        if (this.props.username === "Admin"){
+            let deleteAllUserName = "Admin";
+            this.props.deleteAllUserNameCallback(deleteAllUserName);
+        }
     } */
 
     handleUpdate(uId, uMsg, uName) {
@@ -29,6 +32,16 @@ class MsgList extends React.Component {
     }
 
     render() {
+        /* let deleteAllActions;
+        if (this.props.username == "Admin") {
+            deleteAllActions = (
+                <th>
+                    <button type="submit" className="btn btn-danger" onClick={this.deleteMessage}>Delete All</button>
+                </th>
+            );
+        } else {
+            deleteAllActions = <th/>
+        } */
         return (
             <table className="table table-striped table-bordered">
                 <thead>
@@ -36,8 +49,8 @@ class MsgList extends React.Component {
                     <th scope="col" className="w-10">#</th>
                     <th scope="col" className="w-25">Name</th>
                     <th scope="col" className="w-50">Message</th>
-                    <th scope="col"></th>
                     <th scope="col">{this.props.username}</th>
+                    {/* deleteAllActions */}
                     </tr>
                 </thead>
                 <tbody>
