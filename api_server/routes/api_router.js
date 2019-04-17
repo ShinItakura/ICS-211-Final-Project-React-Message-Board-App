@@ -15,15 +15,16 @@ router.route('/msgs')
 .get(msgAPIController.getAllMessagesOrderedByLastPosted)
 .post(passport.authenticate('basic', { session: false }),
 msgAPIController.addNewMessage);
-//.delete(msgAPIController.deleteAllMessage);
+//.delete(msgAPIController.deleteAllMessages);
 
 router.route('/msgs/:messageid')
 .get(msgAPIController.getSingleMessage)
-.delete(msgAPIController.deleteSingleMessage)
+.delete(msgAPIController.deleteSingleMessage);
+
+router.route('/msgs/:name/:messageid')
 .put(msgAPIController.updateSingleMessage);
 
-router.route('/msgs/:name')
-.get(msgAPIController.getAllMessagesOrderedByLastPosted);
+
 
 
 

@@ -26,6 +26,7 @@ class MsgBoard extends React.Component {
         this.addNewUser = this.addNewUser.bind(this);
         this.deleteSingleMessage = this.deleteSingleMessage.bind(this);
         this.updateSingleMessage = this.updateSingleMessage.bind(this);
+        //this.deleteAllMessages = this.deleteAllMessages.bind(this);
     }
 
     handleHTTPErrors(response){
@@ -113,15 +114,41 @@ class MsgBoard extends React.Component {
         });
     }
 
-    updateSingleMessage(id ,message){
-        fetch(`${process.env.API_URL}msgs/${id}`, {
-            method: "PUT",
+    /* deleteAllMessages(deleteAllUserName){
+        console.log(deleteAllUserName);
+        fetch(`${process.env.API_URL}msgs/`, {
+            method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
+            }
+        })
+        .then(result => {
+            let newMsgList = this.state.messages;
+            newMsgList = newMsgList.filter(msg => msg._id !== id)
+            this.setState({
+                messages: newMsgList
+            });
+        }) 
+        .catch(error => {
+            console.log(error);
+        });
+
+    } */
+
+    updateSingleMessage(uId ,uMsg ,uName){
+        console.log("messageboard.jsx "+ uId + " " + uName + " " + uMsg   );
+        const basicString = this.state.userCredentials.email + ':'
+        + this.state.userCredentials.password;
+        fetch(`${process.env.API_URL}msgs/${uName}/${uId}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(basicString)
             },
-            body: JSON.stringify(message)
+            body: JSON.stringify(uMsg)
         })
         .then(response => this.handleHTTPErrors(response))
+        .then(result => result.json())
         .catch(error => {
             console.log(error);
         });

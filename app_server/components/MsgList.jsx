@@ -19,8 +19,13 @@ class MsgList extends React.Component {
     handleDelete(id) {
         this.props.deleteSingleMsgCallback(id);
     }
-    handleUpdate(id) {
-        this.props.updateSingleMsgCallback(id ,msg);
+
+    /* handleDeleteAll(deleteAllUserName) {
+        this.props.deleteAllUserNameCallback(deleteAllUserName);
+    } */
+
+    handleUpdate(uId, uMsg, uName) {
+        this.props.updateSingleMsgCallback(uId, uMsg, uName);
     }
 
     render() {

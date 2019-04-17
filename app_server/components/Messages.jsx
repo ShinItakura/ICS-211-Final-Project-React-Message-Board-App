@@ -6,7 +6,7 @@ class Messages extends React.Component {
         this.deleteMessage = this.deleteMessage.bind(this);
         this.updateMessage = this.updateMessage.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
+        /* this.handleSave = this.handleSave.bind(this); */
         this.handleEdit = this.handleEdit.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.state = {
@@ -15,7 +15,6 @@ class Messages extends React.Component {
             mode:'view'
         };
     }
-    
 
     deleteMessage() {
         //console.log(this.props);
@@ -23,16 +22,18 @@ class Messages extends React.Component {
         this.props.deleteSingleMsgCallback(id);
     }
     updateMessage(){
-        let id = this.props.id;
-        let msg = this.props.msg;
-        this.props.updateSingleMsgCallback(id ,msg);
+        let uId = this.props.id;
+        let uMsg = this.state.inputText;
+        let uName = this.props.name;
+        console.log("messages.jsx "+ uId +" "+ uName + " " + uMsg);
+        this.props.updateSingleMsgCallback(uId, uMsg, uName);
     }
     handleChange(e){
         this.setState({inputText: e.target.value});
     }
-    handleSave() {
+    /* handleSave() {
         this.setState({text: this.state.inputText, mode: 'view'});
-    }
+    } */
     handleEdit() {
         this.setState({mode: 'edit'});
     }
@@ -46,7 +47,7 @@ class Messages extends React.Component {
         if (this.props.name === this.props.username) {
             messageActions = (
                 <td>
-                    <button type="submit" className="btn btn-secondary" onClick={this.deleteMessage}>Delete</button>
+                    <button type="submit" className="btn btn-danger" onClick={this.deleteMessage}>Delete</button>
                 </td>
             );
             editActions = (
@@ -74,7 +75,7 @@ class Messages extends React.Component {
                     <td>{this.props.displayId}</td>
                     <td>{this.props.name}</td>
                     <td><input className="form-control" onChange={this.handleChange} value={this.state.inputText}/></td>
-                    <td><button className="btn btn-primary" onClick={this.handleSave}>Save</button></td>
+                    <td><button className="btn btn-success" onClick={this.updateMessage}>Save</button></td>
                     <td><button className="btn btn-warning" onClick={this.handleCancel}>Cancel</button></td>
                 </tr>
             );

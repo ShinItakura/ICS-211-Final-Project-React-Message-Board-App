@@ -80,7 +80,7 @@ const deleteSingleMessage = (req, res) => {
     }
 };
 
-/* const deleteAllMessage = (req, res) => {
+/* const deleteAllMessages = (req, res) => {
     messageModel.deleteMany({}, err => {
         if (req.body.name !== "Admin") {
             res.status(403).json(err);
@@ -94,10 +94,14 @@ const deleteSingleMessage = (req, res) => {
 // UPDATE Request Handler
 
 const updateSingleMessage = (req, res) => {
-    messageModel.findOneAndUpdate({ _id: req.params.messageid }, req.body, (err, msg) => {
-        if (req.params.name !== msg.name) {
-            res.status(403).json(err);
-        } else if (err) return res.status(500).send(err);
+    messageModel.findOneAndUpdate({ 
+        _id: req.params.messageid }, 
+        req.body, (err, msg) => {
+            if (req.params.name !== msg.name) {
+                res.status(403).json(err);
+            } else if (err) {
+                return res.status(500).send(err);
+            }
             return res.status(200).json({
                 "api-msg": "Message updated"
             });
@@ -120,7 +124,7 @@ module.exports = {
     getAllMessagesOrderedByLastPosted,
     getSingleMessage,
     deleteSingleMessage,
-    //deleteAllMessage,
+    //deleteAllMessages,
     updateSingleMessage,
     addNewMessage
 }
