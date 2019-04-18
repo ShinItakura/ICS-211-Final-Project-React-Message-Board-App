@@ -82,13 +82,9 @@ const deleteSingleMessage = (req, res) => {
 
 const deleteAllMessages = (req, res) => {
     messageModel.deleteMany({}, err => {
-        if (req.body.name !== "Admin") {
-            res.status(403).json(err);
-        } else {
-            return res.status(200).send({
-                "api-msg": "All messages deleted"
-            });
-        }
+        return res.status(200).send({
+            "api-msg": "All messages deleted"
+        });
     });
 };
 
@@ -103,11 +99,11 @@ const updateSingleMessage = (req, res) => {
             } else if (err) {
                 return res.status(500).send(err);
             }
-            return res.status(200).json({
-                "api-msg": "Message updated"
-            });
+            const returnMsg = {id: msg._id};
+            return res.status(200).send(returnMsg);
         }
     );
+    console.log(req.body);
 };
 
 // POST Request Handler

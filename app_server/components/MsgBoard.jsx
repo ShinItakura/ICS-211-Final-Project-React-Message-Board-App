@@ -115,7 +115,7 @@ class MsgBoard extends React.Component {
     }
 
     deleteAllMessages(deleteAllUserName){
-        console.log("messageboard.jsx " + deleteAllUserName);
+        //console.log("messageboard.jsx " + deleteAllUserName);
         fetch(`${process.env.API_URL}/msgs`, {
             method: "DELETE",
             headers: {
@@ -123,30 +123,44 @@ class MsgBoard extends React.Component {
             }
         })
         .then(response=> this.handleHTTPErrors(response))
+        .catch(error => {
+            console.log(error)
+        });
+        fetch(`${process.env.API_URL}/msgs`)
+        .then(response=> this.handleHTTPErrors(response))
+        .then(response=> response.json())
         .then(result=> {
             this.setState({
-                messages: [result].concat(this.state.messages)
-            });
+                messages: result
+            })
         })
         .catch(error => {
             console.log(error);
         });
+
     }
 
     updateSingleMessage(uId ,uMsg ,uName){
-        console.log("messageboard.jsx "+ uId + " " + uName + " " + uMsg   );
-        const basicString = this.state.userCredentials.email + ':'
-        + this.state.userCredentials.password;
+        //console.log("messageboard.jsx "+ uId + " " + uName + " " + uMsg   );
         fetch(`${process.env.API_URL}msgs/${uName}/${uId}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(basicString)
             },
             body: JSON.stringify(uMsg)
         })
-        .then(response => this.handleHTTPErrors(response))
-        .then(result => result.json())
+        .then(response=> this.handleHTTPErrors(response))
+        .catch(error => {
+            console.log(error);
+        });
+        fetch(`${process.env.API_URL}/msgs`)
+        .then(response=> this.handleHTTPErrors(response))
+        .then(response=> response.json())
+        .then(result=> {
+            this.setState({
+                messages: result
+            })
+        })
         .catch(error => {
             console.log(error);
         });

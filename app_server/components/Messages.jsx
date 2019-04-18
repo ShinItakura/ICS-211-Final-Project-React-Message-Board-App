@@ -22,11 +22,11 @@ class Messages extends React.Component {
         this.props.deleteSingleMsgCallback(id);
     }
     updateMessage(){
-        let uId = this.props.id;
-        let uMsg = this.state.inputText;
-        let uName = this.props.name;
-        console.log("messages.jsx "+ uId +" "+ uName + " " + uMsg);
-        //this.setState({text: this.state.inputText, mode: 'view'});
+        let uId =  this.props.id ;
+        let uMsg = { msg: this.state.inputText };
+        let uName =  this.props.name ;
+        //console.log("messages.jsx "+ uId +" "+ uName + " " + uMsg);
+        this.setState({text: this.state.inputText, mode: 'view'});
         this.props.updateSingleMsgCallback(uId, uMsg, uName);
     }
     handleChange(e){
