@@ -94,7 +94,7 @@ class MsgBoard extends React.Component {
 
     deleteSingleMessage(id) {
         //console.log(id);
-        fetch(`${process.env.API_URL}msgs/${id}`, {
+        fetch(`${process.env.API_URL}/msgs/${id}`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
@@ -142,7 +142,7 @@ class MsgBoard extends React.Component {
 
     updateSingleMessage(uId ,uMsg ,uName){
         //console.log("messageboard.jsx "+ uId + " " + uName + " " + uMsg   );
-        fetch(`${process.env.API_URL}msgs/${uName}/${uId}`, {
+        fetch(`${process.env.API_URL}/msgs/${uName}/${uId}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
