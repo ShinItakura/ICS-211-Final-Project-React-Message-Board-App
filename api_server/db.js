@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 let dbURI = 'mongodb://localhost:27017/msgsdb';
+if (process.env.NODE_ENV === 'production') {
+    dbURI = process.env.MONGO_URL;
+}
 mongoose.connect(dbURI, { useNewUrlParser: true, useCreateIndex: true });
 
 mongoose.connection.on('connected', () => {

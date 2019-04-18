@@ -1,0 +1,85 @@
+#
+# ICS 221 Final Project Gitlab CI FILE
+# ------------------------------------
+# Purpose: This activates the GitLab CI Pipeline.
+# Author: Jason Cumiskey, March 2019
+#
+# NOTE:
+# -----
+# THIS CI FILE IS FOR MESSAGE BOARD APP PROJECTS THAT ARE USING
+# A NODE.JS API IN THE API_SERVER FOLDER WITH MONGODB
+#
+# Deploy Stage:
+# -------------
+# It pushes the GitLab master branch of your project to Dokku.
+# Dokku will then build and deploys it.
+#
+# ********* REQUIREMENTS FOR USING THIS *********************
+# Note to Instructor: SSH_PRIVATE_KEY var must be set 
+# in GitLab for the group this project is in.
+# ***********************************************************
+variables:
+  # hostname of the DOKKU deployment server
+  DEPLOY_SRV: deploy.cs.camosun.bc.ca
+  # you can change this to "false" after deploying your DB
+  DEPLOY_DB: "true"
+  # replace $GITLAB_USER_EMAIL with your D2L one if so desired
+  LE_EMAIL: $GITLAB_USER_EMAIL
+  # change to false after deploying cert
+  CERT: "true"
+
+before_script:
+  # --- SSH Settings to communicate with Dokku: DON'T MESS WITH THIS! ---
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+stages:
+  - deploy-db
+  - deploy-app
+
+deploy_db_to_dokku:
+  stage: deploy-db
+  environment: production
+  only:
+    refs:
+      - master
+    variables:
+      - $DEPLOY_DB == "true"
+  tags:
+    # use a deploy runner
+    - deploy
+  script:
+    # First, create the project if it isn't already created, otherwise skip
+    - 'ssh dokku@$DEPLOY_SRV apps:create $CI_PROJECT_NAME || true'
+    # Unlink Service - conditional is if this is being run on first deploy
+    - 'ssh dokku@$DEPLOY_SRV mongo:unlink ${CI_PROJECT_NAME}-DB $CI_PROJECT_NAME || true'
+    # Destroy DB - conditional is if on first run, the DB hasn't been created yet
+    - 'ssh dokku@$DEPLOY_SRV -- --force mongo:destroy ${CI_PROJECT_NAME}-DB || true'
+    # Create/Re-create DB
+    - ssh dokku@$DEPLOY_SRV mongo:create ${CI_PROJECT_NAME}-DB
+    # link DB container to app
+    - ssh dokku@$DEPLOY_SRV mongo:link ${CI_PROJECT_NAME}-DB $CI_PROJECT_NAME
+
+deploy_app_to_dokku:
+  stage: deploy-app
+  environment: production
+  variables:
+    API_URL: https://${CI_PROJECT_NAME}.${DEPLOY_SRV}/api/v1
+    
+  tags:
+    # use a deploy runner
+    - deploy
+  script:
+    - ssh dokku@$DEPLOY_SRV config:set $CI_PROJECT_NAME DOKKU_LETSENCRYPT_EMAIL=$LE_EMAIL NPM_CONFIG_PRODUCTION=false API_URL=$API_URL
+    # push the app to the deploy server
+    - git push dokku@$DEPLOY_SRV:$CI_PROJECT_NAME master
+    # assign a HTTPS Certificate
+    - if [ "$CERT" = "true" ]; then ssh dokku@$DEPLOY_SRV letsencrypt $CI_PROJECT_NAME; fi
+    # Import data dump to the MongoDB only if it was deployed
+    - if [ "$DEPLOY_DB" = "true" ]; then ssh dokku@$DEPLOY_SRV mongo:import ${CI_PROJECT_NAME}-DB < ./api_server/mongo_seed/msgsdb_dump.gz; fi
+  only:
+    # should only be pushing the master branch
+    - master

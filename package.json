@@ -3,7 +3,8 @@
   "version": "0.0.4",
   "private": true,
   "scripts": {
-    "start": "nodemon -e js,jsx --exec \"node -r dotenv/config ./bin/www\"",
+    "dev": "nodemon -e js,jsx --exec \"node -r dotenv/config ./bin/www\"",
+    "start": "node ./bin/www",
     "build": "webpack"
   },
   "dependencies": {
@@ -35,5 +36,9 @@
     "dotenv-webpack": "^1.7.0",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1"
+  },
+  "engines": {
+    "node": "~10.14.2",
+    "npm": "~6.4.1"
   }
 }
